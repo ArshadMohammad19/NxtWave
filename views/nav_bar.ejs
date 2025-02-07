@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   </head>
+<body>
+    <div class="main" id="top_most">
+        <div class="top">
+             <nav class="nav_bar">
+                <h1 id="title" style="padding-left:3%;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">UPCLICK LABS</h1>
+                <list id="menu2" class="Menu">
+                  <a href="/cards"><ul>Invest</ul></a>
+                   <a href="/start"><ul>Start Your Own </ul></a>
+                   <a href="/dashboard"><ul>Dashboard <i class='fas fa-bookmark' style="font-size: 20px;"></i></ul></a>
+                   <a href="#about_area"><ul>About</ul></a>
+                </list>
+                <%- include('../partials/button.ejs') %>
+                  <!-- <% if(locals.user != null) {%>
+                 <a href="/dashboard" > <ul><button id="signup">
+                    <%= user %>  <i class='fas fa-arrow-circle-right'></i></button></ul></a>
+                     <%} else{%>
+                      <a href="/login"><button id="signup">
+                      <%= "Sign In" %> <i class='fas fa-arrow-circle-right'></i></button></a>
+                      <%}%>
+                  </a> -->
+                <!-- <a href="/" ><ul><button id="signup">Log Out <i class='fas fa-arrow-circle-right'></i></button></ul></a> -->
+           
+                <button title="Menu_button" class="hamburger">
+                    <div id="d1"></div>
+                    <div id="d2"></div>
+                    <div id="d3"></div>
+                </button>
+             </nav> 
+             <div id="exp_menu">
+                <list id="exp_list"style="display: none;" >
+                    <a href="/cards"><ul>Investrr</ul></a>
+                    <a href="/start"><ul>Start Your Own</ul></a>
+                    <a href="/dashboard"><ul>Dashboard </ul></a>
+                    <a href="#about_area"><ul>About</ul></a>
+             </list>
+            </div>
+             </div>
+             
+</body>
+</html>

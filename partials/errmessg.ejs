@@ -1,0 +1,28 @@
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+       <style>
+
+       </style>
+     </head>
+     <body>
+       
+            <% if(locals.errorMessagess != null) {%>
+                <style>
+                .messagediv{
+                    width:30vh;
+                    height:5vh;
+                    position:relative;
+                    left:18%;
+                    background-color:transparent;
+                    border-bottom:1px solid red;
+                    border-top:1px solid red;
+                    color: rgb(254, 107, 107);
+                    font-size:2vh;
+                 }
+                </style>
+                 <div class="messagediv"><%= errorMessagess%></div>
+                 <%}%>
+    
+     </body>
+     </html>

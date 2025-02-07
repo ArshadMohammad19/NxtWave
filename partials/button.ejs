@@ -1,0 +1,8 @@
+<% if(locals.user != null) {%>
+    <a href="/dashboard" > <ul><button id="signup">
+       <%= user %>  <i class='fas fa-arrow-circle-right'></i></button></ul></a>
+        <%} else{%>
+         <a href="/login"><button id="signup">
+         <%= "Sign In" %> <i class='fas fa-arrow-circle-right'></i></button></a>
+         <%}%>
+     </a>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start your's</title>
+  <link rel="stylesheet" href="raise.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+</head>
+<body>
+  <div id="b">
+    <h1 id="s">Please <br> Enter Your <br>DETAILS</h1>
+    <h1 id="s2" >PITCH YOUR IDEA</h1>
+   </div>
+   <div id="formbody">
+    <a href="#" onclick="goBack()"><i id="x" class="fa fa-times-circle"></i></a>
+  <form action="/start" method="POST">
+    <div class="form-group">
+      <label for="name">Name<b>:</b></label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email<b>:</b></label>
+      <input type="email" id="email" name="email" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Address<b>:</b></label>
+      <input type="text" id="address" name="address" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="idea_name">Choose your Title<b>:</b></label>
+      <input type="text" id="idea_name" name="idea_name" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="idea_money">Fund to be Raised<b>(INR)</b><b>:</b></label>
+      <input type="number" id="idea_money" name="idea_money" required>
+    </div>
+
+    <div class="form-group">
+      <label for="idea_time">Time Needed<b>(In Months)</b><b>:</b></label>
+      <input type="date" id="idea_time" name="idea_time" required> 
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category<b>:</b></label>
+<select id="category">
+  <option value="">All</option>
+  <option value="technology">Technology</option>
+  <option value="education">Education</option>
+  <option value="social-causes">Bussiness</option>
+</select>
+    </div>
+
+    <div class="form-group">
+      <label for="stage">Project Stage<b>:</b></label>
+<select id="stage">
+  <option value="">All</option>
+  <option value="concept">Concept Stage</option>
+  <option value="prototype">Prototype Stage</option>
+  <option value="production">Production Stage</option>
+</select>
+    </div>
+
+    <div class="form-group">
+      <label for="idea_location">Location<b>:</b></label>
+      <input type="text" id="idea_location" name="idea_location" required>
+    </div>
+
+    <div class="form-group">
+      <label for="idea_details">Explain Your Idea<b>:</b></label>
+      <textarea id="idea_details" name="idea_details" required></textarea>
+    </div>
+    <input type="submit" class="btn" value="Submit" onclick="validatebyadmin()">
+  </form >
+</div>
+</body>
+<script type="text/javascript" src="validation.js"></script>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</html>

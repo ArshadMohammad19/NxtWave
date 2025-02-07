@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+        }
+        #signup{
+          min-width:50px;
+        }
+    .bodi{
+        width: 100%;
+        height:100%;
+        display:flex;
+        flex-direction: row;
+    }
+        .nav_bar {
+          height: 10vh;
+          position:fixed;
+          background:transparent;
+            backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+        
+        }
+   
+        #left-section {
+            position:fixed;
+            top:10vh;
+            left:0px;
+          width: 30%;
+          height:100%;
+          background-color: #323232;
+          float: left;
+          height: 90vh;
+          z-index:1;
+        }
+
+  .Frames{
+  position:fixed;
+  top:10vh;
+  left:30%;
+   right:0px;
+   background-color: #02265c;
+    width:70%;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    border-radius:5px;
+    justify-content:center;
+    align-items: center;
+     overflow:scroll;
+    }
+
+.Frame {
+  display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+  width:100%;
+  height:auto;
+  overflow:scroll;
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-left:10%;
+  margin-top:10vh;
+}
+.clst{
+  border-bottom:1px solid black;
+  width:80%;
+  margin:5%;
+}
+
+        .button {
+          display: inline-block;
+          width: 95%;
+          height: 10%;
+          background-color: #484848;
+          color: #fff;
+          text-align: center;
+          text-decoration: none;
+          margin-top:5%;
+          margin-left:2%;
+          display: flex;
+          justify-content: center; 
+          align-items: center;
+          border-radius:5px;
+        }
+        .button:hover{
+            color:#ff9494;
+        }
+
+        .edit{
+          width: 80%;
+          margin-left:10%;
+        }
+       .edit:hover{
+        background-position: right;
+       }
+        @media (max-width:800px){
+          #left-section{
+            display:none;
+          }
+          .button{
+            display: contents;
+            position:absolute;
+            top:10vh;
+            display:flex;
+            flex-direction: row;
+          }
+          .Frames{
+            left:0px;
+            width:100%;
+            height:100%;
+          }
+        .button2{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top:1%;
+          width:90%;
+          min-height:30px;
+          background-color: rgba(191, 191, 191, 0.9);
+          border-radius:5px;
+        }
+        .button2:hover{
+          background-color: rgb(226, 226, 226);
+        }
+        }
+      </style>
+</head>
+<body>
+    <div id="navbar">
+            <nav class="nav_bar">
+               <h1 id="title" style="padding-left:3%;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">UPCLICK LABS</h1>
+               <list id="menu2" class="Menu">
+                <a href="/"><ul>Home</ul></a>
+                 <a href="/cards"><ul>Invest</ul></a>
+                  <a href="/start"><ul>Start Your Own </ul></a>
+                  <!-- <a href="#"><ul>Bookmarked <i class='fas fa-bookmark' style="font-size: 20px;"></i></ul></a> -->
+               </list>
+              
+                 <% if(locals.user != null) {%>
+                <a > <ul><button id="signup">
+                   <%= user %> &nbsp </button></ul></a>
+                    <%} else{%>
+                     <a><button id="signup">
+                     <%= "Log Out" %> </i></button></a>
+                     <%}%>
+                 </a>
+               <button title="Menu_button" class="hamburger">
+                   <div id="d1"></div>
+                   <div id="d2"></div>
+                   <div id="d3"></div>
+               </button>
+            </nav> 
+           
+            <!-- <div class="exp_menu2" style="display: none;">
+              <list class="list_style"> -->
+            <div  id="exp_menu" style="display: none;">
+               <list id="exp_list">
+                <a href="/" class="button2"><ul>HOME</ul></a>
+                   <a href="/cards"  class="button2"><ul>INVEST</ul></a>
+                   <a href="/start" class="button2"><ul>START YOUR OWN</ul></a>
+                   <a  class="button2" onclick="fetchbookmarks()">BOOKMARKED</a>
+                   <a  class="button2" onclick="fetchAndAddData()">PENDING REQUESTS</a>
+                   <a  class="button2" href="/logout" >LOG OUT</a>
+            </list>
+           </div>
+    <div class="bodi">
+      <div id="left-section">
+        <a  class="button" onclick="fetchbookmarks()">Bookmarked</a>
+        <a class="button" onclick="fetchAndAddData()">PENDING REQUESTS</a>
+        <a href="#" class="button">Approved Requests</a>
+        <!-- <a href="#" class="button">Button 4</a> -->
+        <a href="/logout" class="button">LOG OUT</a>
+      </div>
+      <div id="loadingContainer" style="display: none;z-index:10;">
+        <div id="loadingAnimation"></div>
+      </div>
+      <div class="Frames">
+        <center><h1 style="color:white">PLEASE CHOOSE ANY OPTION ABOVE </h1></center>
+        <div class="Frame" style="display: none;">
+
+        </div>
+        
+      </div>
+    </div>
+    <script rel="text/javascript" src="main.js"></script>
+    <script>
+    async function fetchbookmarks(){
+      const token=document.cookie;
+      await fetch('/bookmarkedbyuser', { method: 'GET'})
+  .then(response => response.json())
+  .then(data => {
+availableids=data;
+    const loadingContainer = document.getElementById('loadingContainer');
+loadingContainer.style.display = 'flex'; 
+const container = document.querySelector('.Frame'); 
+const containerparent = document.querySelector('.Frames');  
+fetch('/api/userspage')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(item => {
+     if(availableids.length>0){
+      if(availableids.includes(item._id)){
+         container.style.display="block";
+      container.style.backgroundColor="transparent";
+      const projectDiv = document.createElement('div');
+      projectDiv.classList.add('projects');
+      const projectId = item._id;
+      projectDiv.setAttribute('id', projectId);
+      const companyLogoInput = document.createElement('div');
+      companyLogoInput.type = 'image';
+      companyLogoInput.alt = 'Your_Logo';
+      companyLogoInput.innerHTML = 'Logo';
+      companyLogoInput.style.width = '70px';
+      companyLogoInput.classList.add('Company_Logo')
+      projectDiv.appendChild(companyLogoInput);
+
+      const projectNameHeading = document.createElement('h3');
+      projectNameHeading.textContent = item.Title;
+      projectNameHeading.id = 'Project_Namee';
+      projectNameHeading.classList.add('Project_Name');
+      projectDiv.appendChild(projectNameHeading);
+
+      const detailsBarDiv = document.createElement('div');
+      detailsBarDiv.classList.add('Details_Bar');
+      projectDiv.appendChild(detailsBarDiv);
+
+      const amountDiv = document.createElement('div');
+      amountDiv.classList.add('Amount');
+      const amountValue = document.createElement('p');
+      amountValue.textContent ="0";
+      const amountTotal = document.createElement('p');
+      amountTotal.textContent =item.MoneyToBeRaised;
+      amountDiv.appendChild(amountValue);
+      amountDiv.appendChild(amountTotal);
+      detailsBarDiv.appendChild(amountDiv);
+
+      const investorsCountDiv = document.createElement('div');
+      investorsCountDiv.classList.add('Investors_count');
+      const investorsCountValue = document.createElement('p');
+      investorsCountValue.textContent = "0";
+      const investorsCountLabel = document.createElement('p');
+      investorsCountLabel.textContent = 'investors';
+      investorsCountDiv.appendChild(investorsCountValue);
+      investorsCountDiv.appendChild(investorsCountLabel);
+      detailsBarDiv.appendChild(investorsCountDiv);
+
+      const timeDiv = document.createElement('div');
+      timeDiv.classList.add('Time');
+      const timeValue = document.createElement('p');
+      timeValue.textContent ="0";
+      const timeLabel = document.createElement('p');
+      timeLabel.textContent = 'days left';
+      timeDiv.appendChild(timeValue);
+      timeDiv.appendChild(timeLabel);
+      detailsBarDiv.appendChild(timeDiv);
+
+      const progressDiv = document.createElement('div');
+      progressDiv.classList.add('progress2');
+      const progressBar = document.createElement('progress');
+      progressBar.value = 30;
+      progressBar.max = 100;
+      progressDiv.appendChild(progressBar);
+      detailsBarDiv.appendChild(progressDiv);
+
+      const aboutDiv = document.createElement('div');
+      aboutDiv.classList.add('About');
+      const aboutParagraph = document.createElement('p');
+      aboutParagraph.textContent = 'ABOUT:';
+      const aboutDetailsParagraph = document.createElement('p');
+      aboutDetailsParagraph.classList.add('About2');
+      aboutDetailsParagraph.textContent = item.About_Idea;
+      aboutDiv.appendChild(aboutParagraph);
+      aboutDiv.appendChild(aboutDetailsParagraph);
+      projectDiv.appendChild(aboutDiv);
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.classList.add('options');
+      const backProjectButton = document.createElement('button');
+      backProjectButton.classList.add('backp');
+      backProjectButton.textContent = 'BACK PROJECT';
+
+      backProjectButton.addEventListener('click',()=>{
+        // fetch('/tokensplace',{method:'GET'}).then(response=>response.json()).then(data=>{
+        fetch('/cards/payment', {method: 'get'}).then(response=>{
+          window.location.href = '/cards/payment';
+        })
+      })
+     
+      const bookmarkButton = document.createElement('button');
+      bookmarkButton.classList.add('bookm');
+      bookmarkButton.innerHTML = 'BOOKMARKED';
+      bookmarkButton.addEventListener('click', () => {
+            removeBookmark(bookmarkButton,projectId);
+            removeProject(projectDiv);
+      });
+
+      optionsDiv.appendChild(backProjectButton);
+      optionsDiv.appendChild(bookmarkButton);
+      projectDiv.appendChild(optionsDiv);
+
+      container.appendChild(projectDiv);
+      loadingContainer.style.display = 'none'; 
+  }}
+  else{
+    containerparent.innerHTML="NO BOOKMARKS YET!!"
+    containerparent.style.fontSize="24px";
+    containerparent.style.color="white";
+    loadingContainer.style.display = 'none';
+  }
+ 
+}
+);
+ 
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+
+
+async function fetchAndAddData() {
+  const framesDiv = document.querySelector('.Frames');
+const frameDiv = document.querySelector('.Frame');
+  fetch('/pendingrequests')
+    .then(response => response.json())
+    .then(data => {
+      const dataArray = data; 
+      if(data.message!="no requests raised"){
+      frameDiv.style.display="block";
+      frameDiv.style.backgroundColor="rgb(255,255,255,0.7)"
+      frameDiv.style.marginTop="20vh";
+      frameDiv.style.width="90%";
+      frameDiv.style.marginLeft="10px";
+      frameDiv.innerHTML = '';
+      // console.log(dataArray)
+      for (const key in dataArray) {
+  if (dataArray.hasOwnProperty(key)&& key !== '_id'&& key!='userid') {
+    const value = dataArray[key];
+    const div = document.createElement('div');
+    div.innerHTML = `<b>${key}</b>: ${value}`;
+    div.classList.add('clst');
+    frameDiv.appendChild(div);
+  }
+}
+const editButton = document.createElement('button');
+      // editButton.classList.add('bookm');
+      editButton.classList.add('edit');
+    editButton.innerHTML = 'EDIT INFO';
+    frameDiv.append(editButton)
+framesDiv.appendChild(frameDiv);
+    }
+    else{
+      framesDiv.innerHTML='NO REQUESTS PENDING!!';
+    
+    }
+  })
+    .catch(error => {
+      console.error('An error occurred:', error);
+    });
+}
+
+
+
+
+function removeBookmark(bookmarkButton,id) {
+  const projectId = id;
+  fetch('/removeBookmark', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ projectId })
+  })
+    .then(response => {
+      if (response.ok) {
+        // Remove the bookmarked project from the UI
+        const projectDiv = bookmarkButton.closest('.projects');
+        projectDiv.remove();
+      } else {
+        throw new Error('Failed to remove bookmark');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function removeProject(projectDiv) {
+  projectDiv.classList.add('projects--hidden');
+  setTimeout(() => {
+    projectDiv.remove();
+    adjustProjectPositions();
+  }, 300);
+}
+
+function adjustProjectPositions() {
+  const projects = document.querySelectorAll('.projects');
+  let topOffset = 20;
+  
+  projects.forEach(project => {
+    project.style.left = `${topOffset}px`;
+    topOffset += project.offsetHeight;
+  });
+}
+    </script>
+</body>
+</html>

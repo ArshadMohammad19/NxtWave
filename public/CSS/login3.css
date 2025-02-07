@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+
+body, html {
+	height: 100%;
+	margin: 0;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+}
+
+body {
+	background-color: rgb(16, 16, 16);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.digit-group {
+	input {
+		width: 30px;
+		height: 50px;
+		background-color: lighten(black, 5%);
+		border: none;
+		line-height: 50px;
+		text-align: center;
+		font-size: 24px;
+		font-family: 'Raleway', sans-serif;
+		font-weight:30px;
+		color: rgb(2, 44, 255);
+		margin: 0 2px;
+	}
+
+	.splitter {
+		padding: 0 5px;
+		color: white;
+		font-size: 24px;
+	}
+}
+
+.prompt {
+	margin-bottom: 20px;
+	font-size: 20px;
+	color: white;
+}
+.btn {
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #3e7ce7, #5a91d3, #326abe);
+	background-size: 200%;
+	font-size: 1.2rem;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+  }
+  
+  .btn:hover {
+	background-position: right;
+  }
+  
+  .btn:disabled {
+	background: grey; 
+	cursor: not-allowed; 
+	opacity: 0.6; 
+  }
+  
